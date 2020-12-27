@@ -23,6 +23,10 @@ export class CollectiefGeheugen extends LowestTimeRound {
     public correctAnswer(answerIndex: number) {
         const { answers } = this.state.questions[this.state.currentQuestionIndex];
 
+        if (answers[answerIndex].found) {
+            return { scoreForPlayer: 0 };
+        }
+
         let score = 10;
         answers.forEach((answer) => {
             if (answer.found) {

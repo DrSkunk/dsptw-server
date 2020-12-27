@@ -27,7 +27,12 @@ class Config {
     public config: ConfigFile
 
     constructor() {
-        this.config = JSON.parse(fs.readFileSync('./config.json').toString()) as ConfigFile;
+        const path = './config.json';
+        if(!fs.existsSync(path)){
+            log.error('Config file "config.json" does not exist. Please copy "config.json.example" to "config.json" and add your details.')
+            throw new Error('"config.json" invalid')
+        }
+        this.config = JSON.parse(fs.readFileSync(path).toString()) as ConfigFile;
         const keys = new Set(['port', 'staticAssets', 'staticClient', 'episode', 'presenterName', 'presenterCamera', 'juryName', 'juryCamera', 'grandFinaleMode', 'numberOfPlayers']);
         if (!eqSet(keys, new Set(Object.keys(this.config)))) {
             throw new Error('Settings file incomplete, the following settings must be set in config.json: ' + Array.from(keys).join(', '))

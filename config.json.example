@@ -1,0 +1,12 @@
+{
+  "port": 8080,
+  "staticAssets": "/your/static/assets",
+  "staticClient": "../dsptw-client/build",
+  "episode": 1,
+  "presenterName": "Erika",
+  "presenterCamera": "https://obs.ninja/?view=",
+  "juryName": "Eva",
+  "juryCamera": "https://obs.ninja/?view=",
+  "grandFinaleMode": false,
+  "numberOfPlayers": 3
+}

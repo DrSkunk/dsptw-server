@@ -7,3 +7,5 @@ espowered/
 
 node_modules/
 dist/
+
+config.json

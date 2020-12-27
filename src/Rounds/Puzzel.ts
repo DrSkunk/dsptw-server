@@ -39,6 +39,9 @@ export class Puzzel extends LowestTimeRound {
     }
 
     public correctAnswer(foundIndex: number) {
+        if (this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex].found) {
+            return { scoreForPlayer: 0 };
+        }
         this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex].found = true;
         const answersFound = this.state.puzzles[this.state.currentPuzzleIndex].answers.filter(answer => answer.found).length;
         const allAnswersFound = answersFound === 3;

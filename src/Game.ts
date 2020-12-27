@@ -39,20 +39,17 @@ export class Game extends EventEmitter {
             const episode = JSON.parse(fs.readFileSync(`${config.staticAssets}/aflevering${episodeNumber}/questions.json`).toString());
             const finale = JSON.parse(fs.readFileSync(`${config.staticAssets}/finale.json`).toString());
 
-            this.players = [
-                {
-                    time: 60000,
-                    name: "player 1"
-                },
-                {
-                    time: 60000,
-                    name: "player 2"
-                },
-                {
-                    time: 60000,
-                    name: "player 3"
-                }
-            ]
+            this.players = [];
+            for (let i = 0; i < config.numberOfPlayers; i++) {
+                this.players.push(
+                    {
+                        time: 60000,
+                        name: "player " + (i + 1)
+                    },
+                )
+
+            }
+
             this.rounds = [
                 new Overzicht,
                 new DrieZesNegen(episode.drieZesNegen),
@@ -263,9 +260,13 @@ export class Game extends EventEmitter {
 
     public getState(): GameState {
         const currentRound = this.getCurrentRound();
+        let currentPlayers = Array.from(Array(config.numberOfPlayers).keys())
+        if (currentRound instanceof Finale) {
+            currentPlayers = currentRound.currentPlayerIds;
+        }
         return {
             episode: config.episode,
-            currentPlayers: (currentRound instanceof Finale) ? currentRound.currentPlayerIds : [0, 1, 2],
+            currentPlayers,
             currentPlayer: this.getCurrentRound().getCurrentPlayerId(),
             players: this.players,
             roundState: this.getCurrentRound().getState(),

@@ -3,6 +3,7 @@ import { RoundName } from '../../../dsptw-client/src/models/RoundName';
 import { GalerijState } from '../../../dsptw-client/src/models/Rounds/GalerijState';
 import { LowestTimeRound } from './LowestTimeRound';
 import { log } from '../Log';
+import { config } from '../Config';
 
 export class Galerij extends LowestTimeRound {
   private state: GalerijState;
@@ -19,7 +20,9 @@ export class Galerij extends LowestTimeRound {
     };
   }
 
-  public correctAnswer(imageIndex: number) {
+  public correctAnswer(
+    imageIndex: number
+  ): { scoreForPlayer: number; allAnswersFound?: boolean } {
     if (
       this.state.questions[this.state.currentQuestionSeriesIndex][imageIndex]
         .found
@@ -36,18 +39,18 @@ export class Galerij extends LowestTimeRound {
     return { scoreForPlayer: 15, allAnswersFound };
   }
 
-  public getState() {
+  public getState(): GalerijState {
     return this.state;
   }
 
-  public nextQuestion() {
-    if (this.state.currentQuestionSeriesIndex < 2) {
+  public nextQuestion(): void {
+    if (this.state.currentQuestionSeriesIndex < config.numberOfPlayers - 1) {
       this.state.currentQuestionSeriesIndex++;
       this.state.currentImageIndex = -1;
     }
   }
 
-  public nextImage() {
+  public nextImage(): void {
     if (this.state.currentImageIndex < 9) {
       this.state.currentImageIndex++;
     } else {

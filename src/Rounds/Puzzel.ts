@@ -3,6 +3,7 @@ import { RoundName } from '../../../dsptw-client/src/models/RoundName';
 import { PuzzelState } from '../../../dsptw-client/src/models/Rounds/PuzzelState';
 import { LowestTimeRound } from './LowestTimeRound';
 import shuffleSeed from 'shuffle-seed';
+import { config } from '../Config';
 
 export class Puzzel extends LowestTimeRound {
   private state: PuzzelState;
@@ -63,7 +64,7 @@ export class Puzzel extends LowestTimeRound {
   }
 
   public nextQuestion(): void {
-    if (this.state.currentPuzzleIndex < 2) {
+    if (this.state.currentPuzzleIndex < config.numberOfPlayers - 1) {
       this.state.currentPuzzleIndex++;
     }
   }

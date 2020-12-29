@@ -32,21 +32,21 @@ export class Game extends EventEmitter {
     this.players = [];
   }
 
-  public async loadEpisode(episodeNumber: number) {
+  public async loadEpisode(episodeNumber: number): Promise<void> {
     try {
       log.info(
         `Loading episode from ${config.staticAssets}/aflevering${episodeNumber}`
       );
-      const episode = JSON.parse(
-        fs
-          .readFileSync(
-            `${config.staticAssets}/aflevering${episodeNumber}/questions.json`
-          )
-          .toString()
-      );
-      const finale = JSON.parse(
-        fs.readFileSync(`${config.staticAssets}/finale.json`).toString()
-      );
+      const episodeString = fs
+        .readFileSync(
+          `${config.staticAssets}/aflevering${episodeNumber}/questions.json`
+        )
+        .toString();
+      const episode = JSON.parse(episodeString);
+      const finaleString = fs
+        .readFileSync(`${config.staticAssets}/finale.json`)
+        .toString();
+      const finale = JSON.parse(finaleString);
 
       this.players = [];
       for (let i = 0; i < config.numberOfPlayers; i++) {
@@ -83,7 +83,7 @@ export class Game extends EventEmitter {
     }
   }
 
-  public startTime() {
+  public startTime(): void {
     if (!(this.getCurrentRound() instanceof Overzicht)) {
       log.debug('startTime');
       this.emit(GameEmitType.GameEvent, GameEvent.StartTime);
@@ -106,7 +106,7 @@ export class Game extends EventEmitter {
     }
   }
 
-  public stopTime() {
+  public stopTime(): void {
     log.debug('stopTime');
     let playSound = true;
     this.players.forEach((player) => {
@@ -130,7 +130,7 @@ export class Game extends EventEmitter {
   public correctAnswer(
     foundIndex?: number,
     playerId = this.getCurrentRound().getCurrentPlayerId()
-  ) {
+  ): void {
     log.debug('correctAnswer', { foundIndex, playerIndex: playerId });
     this.emit(GameEmitType.GameEvent, GameEvent.AnswerCorrect);
     const result = this.getCurrentRound().correctAnswer(foundIndex);
@@ -146,20 +146,20 @@ export class Game extends EventEmitter {
     this.emitGameStateUpdate();
   }
 
-  public showAllAnswers() {
+  public showAllAnswers(): void {
     log.debug('Showing all unanswered answers');
     this.showAnswers = true;
     this.emitGameStateUpdate();
   }
 
-  public nextQuestion() {
+  public nextQuestion(): void {
     log.debug('nextQuestion');
     this.showAnswers = false;
     this.getCurrentRound().nextQuestion();
     this.emitGameStateUpdate();
   }
 
-  public setCurrentQuestion(questionIndex: number) {
+  public setCurrentQuestion(questionIndex: number): void {
     log.debug('setCurrentQuestion', questionIndex);
     const currentRound = this.getCurrentRound();
     if (currentRound instanceof OpenDeur) {
@@ -175,7 +175,7 @@ export class Game extends EventEmitter {
     }
   }
 
-  public setView(view: ViewType) {
+  public setView(view: ViewType): void {
     log.debug('setView', view);
     this.showAnswers = false;
     const currentRound = this.getCurrentRound();
@@ -190,7 +190,7 @@ export class Game extends EventEmitter {
     }
   }
 
-  public nextImage() {
+  public nextImage(): void {
     log.debug('nextImage');
     const currentRound = this.getCurrentRound();
     if (currentRound instanceof Galerij) {
@@ -201,7 +201,7 @@ export class Game extends EventEmitter {
     this.emitGameStateUpdate();
   }
 
-  public previousRound() {
+  public previousRound(): void {
     log.debug('previousRound');
     this.stopTime();
     if (this.roundIndex > 0) {
@@ -217,7 +217,7 @@ export class Game extends EventEmitter {
     this.emitGameStateUpdate();
   }
 
-  public nextRound() {
+  public nextRound(): void {
     this.stopTime();
     log.debug('nextRound');
     this.showAnswers = false;
@@ -240,40 +240,40 @@ export class Game extends EventEmitter {
     }
   }
 
-  public nextStartingPlayer() {
+  public nextStartingPlayer(): void {
     const currentRound = this.getCurrentRound();
     currentRound.calculateNextStartingPlayer();
 
     this.emitGameStateUpdate();
   }
 
-  public nextPlayerToComplete() {
+  public nextPlayerToComplete(): void {
     const currentRound = this.getCurrentRound();
     currentRound.calculateNextPlayerToComplete();
     this.emitGameStateUpdate();
   }
 
-  public setPlayerName(playerId: number, name: string) {
+  public setPlayerName(playerId: number, name: string): void {
     this.players[playerId].name = name;
     this.emitGameStateUpdate();
   }
 
-  public setPlayerTime(playerId: number, time: number) {
+  public setPlayerTime(playerId: number, time: number): void {
     this.players[playerId].time = time;
     this.emitGameStateUpdate();
   }
 
-  public setPlayerCameraLink(playerId: number, cameraLink: string) {
+  public setPlayerCameraLink(playerId: number, cameraLink: string): void {
     this.players[playerId].cameraLink = cameraLink;
     this.emitGameStateUpdate();
   }
 
-  public showJury() {
+  public showJury(): void {
     this.juryStatus = true;
     this.emitGameStateUpdate();
   }
 
-  public hideJury() {
+  public hideJury(): void {
     this.juryStatus = false;
     this.emitGameStateUpdate();
   }

@@ -6,7 +6,7 @@ import { Round } from './Round';
 import { config } from '../Config';
 
 export class Finale extends Round {
-  public currentPlayerIds: number[] = [0, 1, 2];
+  public currentPlayerIds: number[];
   private state: FinaleState;
   private currentAnsweringPlayerIdIndex = 0;
   private players: PlayerState[];
@@ -14,6 +14,7 @@ export class Finale extends Round {
   constructor(players: PlayerState[], finale: any) {
     super();
     this.players = players;
+    this.currentPlayerIds = Array.from(Array(config.numberOfPlayers).keys());
     this.state = {
       roundName: RoundName.Finale,
       currentQuestionIndex: 0,
@@ -29,7 +30,7 @@ export class Finale extends Round {
     };
   }
 
-  public init() {
+  public init(): void {
     this.selectFinalPlayers();
   }
 
@@ -54,26 +55,26 @@ export class Finale extends Round {
     };
   }
 
-  public getState() {
+  public getState(): FinaleState {
     return this.state;
   }
 
-  public nextQuestion() {
+  public nextQuestion(): void {
     this.state.currentQuestionIndex++;
     log.info(
       'Current Finale question index: ' + this.state.currentQuestionIndex
     );
   }
 
-  public calculateNextStartingPlayer() {
+  public calculateNextStartingPlayer(): void {
     this.currentAnsweringPlayerIdIndex = 1 - this.currentAnsweringPlayerIdIndex;
   }
 
-  public calculateNextPlayerToComplete() {
+  public calculateNextPlayerToComplete(): void {
     this.currentAnsweringPlayerIdIndex = 1 - this.currentAnsweringPlayerIdIndex;
   }
 
-  public getCurrentPlayerId() {
+  public getCurrentPlayerId(): number {
     return this.currentPlayerIds[this.currentAnsweringPlayerIdIndex];
   }
 

@@ -1,18 +1,21 @@
 import { PlayerState } from '../../../dsptw-client/src/models/PlayerState';
+import { config } from '../Config';
 import { log } from '../Log';
 import { Round } from './Round';
 
 export abstract class LowestTimeRound extends Round {
-  private playerStartingOrder: number[] = [0, 1, 2];
-  private playerCompleteOrder: number[] = [0, 1, 2];
+  private playerStartingOrder: number[];
+  private playerCompleteOrder: number[];
   private players: PlayerState[];
 
   constructor(players: PlayerState[]) {
     super();
     this.players = players;
+    this.playerStartingOrder = Array.from(Array(config.numberOfPlayers).keys());
+    this.playerCompleteOrder = Array.from(Array(config.numberOfPlayers).keys());
   }
 
-  public calculateNextStartingPlayer() {
+  public calculateNextStartingPlayer(): void {
     log.debug('calculateNextStartingPlayer');
     log.debug('playerStartingOrder before', this.playerStartingOrder);
     log.debug('playerCompleteOrder before', this.playerCompleteOrder);
@@ -24,7 +27,7 @@ export abstract class LowestTimeRound extends Round {
       );
       const firstPlayer = this.playerStartingOrder[0];
 
-      const otherPlayers = [0, 1, 2]
+      const otherPlayers = Array.from(Array(config.numberOfPlayers).keys())
         .filter((player) => player !== firstPlayer)
         .sort((a, b) => this.players[a].time - this.players[b].time);
       this.playerCompleteOrder = [firstPlayer, ...otherPlayers];
@@ -33,17 +36,17 @@ export abstract class LowestTimeRound extends Round {
     }
   }
 
-  public calculateNextPlayerToComplete() {
+  public calculateNextPlayerToComplete(): void {
     if (this.playerCompleteOrder.length >= 2) {
       this.playerCompleteOrder.shift();
     }
   }
 
-  public getCurrentPlayerId() {
+  public getCurrentPlayerId(): number {
     return this.playerCompleteOrder[0];
   }
 
-  public init() {
+  public init(): void {
     this.playerStartingOrder.sort(
       (a, b) => this.players[a].time - this.players[b].time
     );

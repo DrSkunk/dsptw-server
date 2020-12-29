@@ -54,7 +54,7 @@ export class Puzzel extends LowestTimeRound {
     return { scoreForPlayer: 30, allAnswersFound };
   }
 
-  public getState() {
+  public getState(): PuzzelState {
     return this.state;
   }
 

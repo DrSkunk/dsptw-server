@@ -19,7 +19,11 @@ export class CollectiefGeheugen extends LowestTimeRound {
     };
   }
 
-  public correctAnswer(answerIndex: number) {
+  public correctAnswer(
+    answerIndex: number
+  ):
+    | { scoreForPlayer: number; allAnswersFound: boolean }
+    | { scoreForPlayer: number } {
     const { answers } = this.state.questions[this.state.currentQuestionIndex];
 
     if (answers[answerIndex].found) {
@@ -43,11 +47,11 @@ export class CollectiefGeheugen extends LowestTimeRound {
     return { scoreForPlayer: score, allAnswersFound };
   }
 
-  public getState() {
+  public getState(): CollectiefGeheugenState {
     return this.state;
   }
 
-  public nextQuestion() {
+  public nextQuestion(): void {
     this.state.currentQuestionIndex++;
   }
 
@@ -55,7 +59,7 @@ export class CollectiefGeheugen extends LowestTimeRound {
     this.state.currentQuestionIndex = questionIndex;
   }
 
-  public setView(view: ViewType) {
+  public setView(view: ViewType): void {
     this.state.currentView = view;
   }
 

@@ -17,7 +17,7 @@ export class DrieZesNegen extends Round {
     };
   }
 
-  public correctAnswer() {
+  public correctAnswer(): { scoreForPlayer: number } {
     if (this.state.currentQuestionIndex % 3 === 2) {
       return { scoreForPlayer: 10 };
     }
@@ -25,11 +25,11 @@ export class DrieZesNegen extends Round {
     return { scoreForPlayer: 0 };
   }
 
-  public calculateNextStartingPlayer() {
+  public calculateNextStartingPlayer(): void {
     this.currentPlayerId = (this.currentPlayerId + 1) % config.numberOfPlayers;
   }
 
-  public calculateNextPlayerToComplete() {
+  public calculateNextPlayerToComplete(): void {
     this.currentPlayerId = (this.currentPlayerId + 1) % config.numberOfPlayers;
   }
 
@@ -37,11 +37,11 @@ export class DrieZesNegen extends Round {
     return this.currentPlayerId;
   }
 
-  public getState() {
+  public getState(): DrieZesNegenState {
     return this.state;
   }
 
-  public nextQuestion() {
+  public nextQuestion(): void {
     this.state.currentQuestionIndex++;
   }
 

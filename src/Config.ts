@@ -14,7 +14,7 @@ type ConfigFile = {
   numberOfPlayers: number;
 };
 
-function eqSet(a: Set<any>, b: Set<any>) {
+function eqSet(a: Set<string>, b: Set<string>) {
   if (a.size !== b.size) return false;
   const aa = Array.from(a);
   const bb = Array.from(b);

@@ -23,7 +23,11 @@ export class OpenDeur extends LowestTimeRound {
     };
   }
 
-  public correctAnswer(foundIndex: number) {
+  public correctAnswer(
+    foundIndex: number
+  ):
+    | { scoreForPlayer: number }
+    | { scoreForPlayer: number; allAnswersFound: boolean } {
     if (
       this.state.questions[this.state.currentQuestionIndex].answers[foundIndex]
         .found
@@ -40,7 +44,7 @@ export class OpenDeur extends LowestTimeRound {
     return { scoreForPlayer: 20, allAnswersFound };
   }
 
-  public getState() {
+  public getState(): OpenDeurState {
     return this.state;
   }
 
@@ -48,7 +52,7 @@ export class OpenDeur extends LowestTimeRound {
     this.state.currentQuestionIndex = questionIndex;
   }
 
-  public setView(view: ViewType) {
+  public setView(view: ViewType): void {
     this.state.currentView = view;
   }
 

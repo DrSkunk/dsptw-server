@@ -37,7 +37,11 @@ export class Puzzel extends LowestTimeRound {
     };
   }
 
-  public correctAnswer(foundIndex: number) {
+  public correctAnswer(
+    foundIndex: number
+  ):
+    | { scoreForPlayer: number }
+    | { scoreForPlayer: number; allAnswersFound: boolean } {
     if (
       this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex]
         .found

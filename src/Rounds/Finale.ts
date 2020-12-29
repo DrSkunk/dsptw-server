@@ -34,7 +34,15 @@ export class Finale extends Round {
     this.selectFinalPlayers();
   }
 
-  public correctAnswer(answerIndex: number) {
+  public correctAnswer(
+    answerIndex: number
+  ):
+    | { scoreForOtherPlayer: number; otherPlayerId: number }
+    | {
+        scoreForOtherPlayer: number;
+        otherPlayerId: number;
+        allAnswersFound: boolean;
+      } {
     if (
       this.state.questions[this.state.currentQuestionIndex].answers[answerIndex]
         .found

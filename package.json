@@ -41,12 +41,10 @@
   "lint-staged": {
     "*.{ts,tsx,json}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.{md,html}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

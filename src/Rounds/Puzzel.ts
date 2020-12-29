@@ -5,63 +5,70 @@ import { LowestTimeRound } from './LowestTimeRound';
 import shuffleSeed from 'shuffle-seed';
 
 export class Puzzel extends LowestTimeRound {
+  private state: PuzzelState;
 
-    private state: PuzzelState;
+  constructor(players: PlayerState[], puzzles: any) {
+    super(players);
 
-    constructor(players: PlayerState[], puzzles: any) {
-        super(players);
+    const allPuzzles = puzzles.map((puzzle: any) => {
+      const answers = puzzle.map((group: { answer: any }) => ({
+        text: group.answer,
+        found: false,
+      }));
+      const grid: { text: any; answerIndex: any }[] = [];
+      puzzle.forEach((group: { words: any[] }, answerIndex: any) => {
+        group.words.forEach((word) => {
+          grid.push({
+            text: word,
+            answerIndex,
+          });
+        });
+      });
+      return {
+        grid: shuffleSeed.shuffle(grid, grid[0].text),
+        answers,
+      };
+    });
 
-        const allPuzzles = puzzles.map((puzzle: any) => {
-            const answers = puzzle.map((group: { answer: any; }) => ({
-                text: group.answer,
-                found: false
-            }));
-            let grid: { text: any; answerIndex: any; }[] = [];
-            puzzle.forEach((group: { words: any[]; }, answerIndex: any) => {
-                group.words.forEach(word => {
-                    grid.push({
-                        text: word,
-                        answerIndex
-                    })
-                })
-            })
-            return {
-                grid: shuffleSeed.shuffle(grid, grid[0].text),
-                answers
-            }
-        })
+    this.state = {
+      roundName: RoundName.Puzzel,
+      currentPuzzleIndex: -1,
+      puzzles: allPuzzles,
+    };
+  }
 
-        this.state = {
-            roundName: RoundName.Puzzel,
-            currentPuzzleIndex: -1,
-            puzzles: allPuzzles
-        };
+  public correctAnswer(foundIndex: number) {
+    if (
+      this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex]
+        .found
+    ) {
+      return { scoreForPlayer: 0 };
     }
+    this.state.puzzles[this.state.currentPuzzleIndex].answers[
+      foundIndex
+    ].found = true;
+    const answersFound = this.state.puzzles[
+      this.state.currentPuzzleIndex
+    ].answers.filter((answer) => answer.found).length;
+    const allAnswersFound = answersFound === 3;
+    return { scoreForPlayer: 30, allAnswersFound };
+  }
 
-    public correctAnswer(foundIndex: number) {
-        if (this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex].found) {
-            return { scoreForPlayer: 0 };
-        }
-        this.state.puzzles[this.state.currentPuzzleIndex].answers[foundIndex].found = true;
-        const answersFound = this.state.puzzles[this.state.currentPuzzleIndex].answers.filter(answer => answer.found).length;
-        const allAnswersFound = answersFound === 3;
-        return { scoreForPlayer: 30, allAnswersFound };
+  public getState() {
+    return this.state;
+  }
+
+  public nextQuestion(): void {
+    if (this.state.currentPuzzleIndex < 2) {
+      this.state.currentPuzzleIndex++;
     }
+  }
 
-    public getState() {
-        return this.state;
-    }
-
-    public nextQuestion(): void {
-        if (this.state.currentPuzzleIndex < 2) {
-            this.state.currentPuzzleIndex++;
-        }
-    }
-
-    public showAllAnswers(): void {
-        this.state.puzzles[this.state.currentPuzzleIndex].answers.forEach(answer => {
-            answer.found = true;
-        })
-    }
-
+  public showAllAnswers(): void {
+    this.state.puzzles[this.state.currentPuzzleIndex].answers.forEach(
+      (answer) => {
+        answer.found = true;
+      }
+    );
+  }
 }

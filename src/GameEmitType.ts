@@ -1,4 +1,4 @@
 export enum GameEmitType {
-    GameStateUpdate = 'gameStateUpdate',
-    GameEvent = 'gameEvent',
+  GameStateUpdate = 'gameStateUpdate',
+  GameEvent = 'gameEvent',
 }

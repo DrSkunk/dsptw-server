@@ -6,15 +6,15 @@ import { Round } from './Round';
 import { config } from '../Config';
 
 export class Finale extends Round {
-  public currentPlayerIds: number[];
   private state: FinaleState;
   private currentAnsweringPlayerIdIndex = 0;
   private players: PlayerState[];
+  private currentFinaleIndex = 0;
+  private finalePlayerIds: number[][] = [];
 
   constructor(players: PlayerState[], finale: any) {
     super();
     this.players = players;
-    this.currentPlayerIds = Array.from(Array(config.numberOfPlayers).keys());
     this.state = {
       roundName: RoundName.Finale,
       currentQuestionIndex: 0,
@@ -83,7 +83,9 @@ export class Finale extends Round {
   }
 
   public getCurrentPlayerId(): number {
-    return this.currentPlayerIds[this.currentAnsweringPlayerIdIndex];
+    return this.finalePlayerIds[this.currentFinaleIndex][
+      this.currentAnsweringPlayerIdIndex
+    ];
   }
 
   public showAllAnswers(): void {
@@ -95,48 +97,75 @@ export class Finale extends Round {
   }
 
   private selectFinalPlayers() {
-    const type = config.grandFinaleMode ? 'LOWEST' : 'HIGHEST';
-    log.debug(`Selecting final players, removing player with ${type} time`);
-
-    let playerToBeRemovedId = 0;
-    if (config.grandFinaleMode) {
-      for (let i = 1; i < this.players.length; i++) {
-        if (this.players[i].time < this.players[playerToBeRemovedId].time) {
-          playerToBeRemovedId = i;
+    // TODO re-enable grand-finale mode setting
+    if (config.numberOfPlayers === 3) {
+      const type = config.grandFinaleMode ? 'LOWEST' : 'HIGHEST';
+      log.debug(`Selecting final players, removing player with ${type} time`);
+      let playerToBeRemovedId = 0;
+      if (config.grandFinaleMode) {
+        for (let i = 1; i < this.players.length; i++) {
+          if (this.players[i].time < this.players[playerToBeRemovedId].time) {
+            playerToBeRemovedId = i;
+          }
+        }
+      } else {
+        for (let i = 1; i < this.players.length; i++) {
+          if (this.players[i].time > this.players[playerToBeRemovedId].time) {
+            playerToBeRemovedId = i;
+          }
         }
       }
+      this.finalePlayerIds[0] = [0, 1, 2].filter(
+        (playerId) => playerId !== playerToBeRemovedId
+      );
+      const removedPlayer = this.players[playerToBeRemovedId];
+      log.info(
+        'player',
+        removedPlayer.name,
+        'removed with a time of',
+        removedPlayer.time
+      );
     } else {
-      for (let i = 1; i < this.players.length; i++) {
-        if (this.players[i].time > this.players[playerToBeRemovedId].time) {
-          playerToBeRemovedId = i;
-        }
+      // sort so that lowest scores are first in the array
+      const sortedPlayers = this.players
+        .map((player, id) => ({
+          ...player,
+          id,
+        }))
+        .sort((player1, player2) => (player1.time > player2.time ? 1 : -1));
+      log.debug('sortedPlayers', sortedPlayers);
+
+      if (sortedPlayers.length % 2 === 1) {
+        // TODO test this out
+        log.info('Odd number of players, highest score is the winner');
+        const winner = sortedPlayers[sortedPlayers.length - 1];
+        log.info(`${winner.name} won!`);
+        this.finalePlayerIds = this.chunk(sortedPlayers.slice(0, -1));
+      } else {
+        this.finalePlayerIds = this.chunk(sortedPlayers);
       }
     }
-
-    this.currentPlayerIds = this.currentPlayerIds.filter(
-      (playerId) => playerId !== playerToBeRemovedId
-    );
-
-    const removedPlayer = this.players[playerToBeRemovedId];
-    log.info(
-      'player',
-      removedPlayer.name,
-      'removed with a time of',
-      removedPlayer.time
-    );
   }
 
+  public nextFinale(): void {
+    if (this.currentFinaleIndex + 1 < this.finalePlayerIds.length) {
+      this.currentFinaleIndex++;
+    }
+  }
+
+  public getCurrentPlayerIds(): number[] {
+    return this.finalePlayerIds[this.currentFinaleIndex];
+  }
+  private chunk(array: any[]) {
+    return Array(Math.ceil(array.length / 2))
+      .fill(0)
+      .map((_, index) => index * 2)
+      .map((begin) => array.map((player) => player.id).slice(begin, begin + 2));
+  }
   /**
    * Only to be called in the final round when there are two players left.
    */
   private getOtherPlayerId() {
-    return this.currentPlayerIds[1 - this.currentAnsweringPlayerIdIndex]; // if you are ninja
-
-    // If you are not a ninja
-    // if (this.currentPlayerIds.indexOf(this.currentAnsweringPlayerIdIndex) === 0) {
-    //     return 1;
-    // } else {
-    //     return 0;
-    // }
+    return this.getCurrentPlayerIds()[1 - this.currentAnsweringPlayerIdIndex];
   }
 }

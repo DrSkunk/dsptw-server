@@ -67,6 +67,8 @@ import { GameEmitType } from './GameEmitType';
         case SocketCommand.NextRound:
           game.nextRound();
           break;
+        case SocketCommand.NextFinale:
+          game.nextFinale();
         case SocketCommand.NextStartingPlayer:
           game.nextStartingPlayer();
           break;

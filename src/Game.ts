@@ -240,6 +240,17 @@ export class Game extends EventEmitter {
     }
   }
 
+  public nextFinale(): void {
+    log.debug('Next finale');
+    const currentRound = this.getCurrentRound();
+    if (currentRound instanceof Finale) {
+      currentRound.nextFinale();
+      this.emitGameStateUpdate();
+    } else {
+      log.warn('Trying to call "next finale" on a round that is not "Finale"');
+    }
+  }
+
   public nextStartingPlayer(): void {
     const currentRound = this.getCurrentRound();
     currentRound.calculateNextStartingPlayer();
@@ -282,7 +293,7 @@ export class Game extends EventEmitter {
     const currentRound = this.getCurrentRound();
     let currentPlayers = Array.from(Array(config.numberOfPlayers).keys());
     if (currentRound instanceof Finale) {
-      currentPlayers = currentRound.currentPlayerIds;
+      currentPlayers = currentRound.getCurrentPlayerIds();
     }
     return {
       episode: config.episode,

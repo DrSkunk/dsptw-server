@@ -56,7 +56,13 @@ class Config {
       );
     }
     const type = this.config.grandFinaleMode ? 'LOWEST' : 'HIGHEST';
-    log.info(`Current mode: removing player with ${type} time`);
+    if (this.config.numberOfPlayers !== 3) {
+      log.warn(
+        'Grand finale mode setting only works when playing with exactly THREE players'
+      );
+    } else {
+      log.info(`Current mode: removing player with ${type} time`);
+    }
   }
 }
 

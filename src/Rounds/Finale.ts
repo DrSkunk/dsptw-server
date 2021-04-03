@@ -97,7 +97,6 @@ export class Finale extends Round {
   }
 
   private selectFinalPlayers() {
-    // TODO re-enable grand-finale mode setting
     if (config.numberOfPlayers === 3) {
       const type = config.grandFinaleMode ? 'LOWEST' : 'HIGHEST';
       log.debug(`Selecting final players, removing player with ${type} time`);
@@ -136,7 +135,6 @@ export class Finale extends Round {
       log.debug('sortedPlayers', sortedPlayers);
 
       if (sortedPlayers.length % 2 === 1) {
-        // TODO test this out
         log.info('Odd number of players, highest score is the winner');
         const winner = sortedPlayers[sortedPlayers.length - 1];
         log.info(`${winner.name} won!`);
@@ -144,6 +142,7 @@ export class Finale extends Round {
       } else {
         this.finalePlayerIds = this.chunk(sortedPlayers);
       }
+      console.log('finalePlayerIds', this.finalePlayerIds);
     }
   }
 
@@ -160,7 +159,12 @@ export class Finale extends Round {
     return Array(Math.ceil(array.length / 2))
       .fill(0)
       .map((_, index) => index * 2)
-      .map((begin) => array.map((player) => player.id).slice(begin, begin + 2));
+      .map((begin) =>
+        array
+          .map((player) => player.id)
+          .slice(begin, begin + 2)
+          .sort()
+      );
   }
   /**
    * Only to be called in the final round when there are two players left.

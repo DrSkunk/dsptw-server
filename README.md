@@ -36,16 +36,16 @@ Then build the client files with `npm run build`.
 
 `staticAssets` is where you set the location of the static files. This must be set to the directory containing your images and videos used in the different rounds. It must have the following directory structure. Sound files are optional.
 
-**Important: Videos must be `.mp4`, images must be `.png` and audio files must be `.mp3`!**
+**Important: Videos must be `.webm`, images must be `.png` and audio files must be `.mp3`!**
 
 - static
   - finale.json
   - aflevering1
     - questions.json
     - collectiefgeheugen
-      - 1.mp4
-      - 2.mp4
-      - 3.mp4
+      - 1.webm
+      - 2.webm
+      - 3.webm
     - galerij
       - 1
         - 1.png
@@ -69,9 +69,9 @@ Then build the client files with `npm run build`.
         - ...
         - 10.png
     - opendeur
-      - 1.mp4
-      - 2.mp4
-      - 3.mp4
+      - 1.webm
+      - 2.webm
+      - 3.webm
   - sound
     - answerCorrect.mp3
     - answerTimeout.mp3 (currently not used yet)

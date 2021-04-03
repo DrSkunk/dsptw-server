@@ -96,6 +96,18 @@ import { GameEmitType } from './GameEmitType';
         case SocketCommand.playApplause:
           broadcast(SocketEvent.GameEvent, GameEvent.Applause);
           break;
+        case SocketCommand.StartIntroLoop:
+          broadcast(SocketEvent.GameEvent, GameEvent.StartIntroLoop);
+          break;
+        case SocketCommand.StopIntroLoop:
+          broadcast(SocketEvent.GameEvent, GameEvent.StopIntroLoop);
+          break;
+        case SocketCommand.PlayOpening:
+          broadcast(SocketEvent.GameEvent, GameEvent.Opening);
+          break;
+        case SocketCommand.FocusPlayer:
+          game.focusPlayer(data.playerIndex);
+          break;
         default:
           log.warn('not a valid socket command');
       }

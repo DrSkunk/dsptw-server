@@ -53,6 +53,7 @@ export class Game extends EventEmitter {
         this.players.push({
           time: 60000,
           name: 'player ' + (i + 1),
+          focused: false,
         });
       }
 
@@ -286,6 +287,16 @@ export class Game extends EventEmitter {
 
   public hideJury(): void {
     this.juryStatus = false;
+    this.emitGameStateUpdate();
+  }
+
+  public focusPlayer(playerIndex: number): void {
+    this.players.forEach((player) => {
+      player.focused = false;
+    });
+    if (playerIndex >= 0 && playerIndex < this.players.length) {
+      this.players[playerIndex].focused = true;
+    }
     this.emitGameStateUpdate();
   }
 

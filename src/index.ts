@@ -90,6 +90,9 @@ import { GameEmitType } from './GameEmitType';
         case SocketCommand.HideJury:
           game.hideJury();
           break;
+        case SocketCommand.ToggleJury:
+          game.toggleJury();
+          break;
         case SocketCommand.PlayVideo:
           broadcast(SocketEvent.PlayVideo, data.videoIndex);
           break;
@@ -107,6 +110,9 @@ import { GameEmitType } from './GameEmitType';
           break;
         case SocketCommand.FocusPlayer:
           game.focusPlayer(data.playerIndex);
+          break;
+        case SocketCommand.SetPauseTargetTime:
+          game.setPauseTargetTime(data.targetTime);
           break;
         default:
           log.warn('not a valid socket command');

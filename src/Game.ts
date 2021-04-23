@@ -16,6 +16,8 @@ import { Overzicht } from './Rounds/Overzicht';
 import { config } from './Config';
 import { GameEmitType } from './GameEmitType';
 import { GameEvent } from '../../dsptw-client/src/models/GameEvent';
+import { Pauze } from './Rounds/Pauze';
+import { RoundName } from '../../dsptw-client/src/models/RoundName';
 
 export class Game extends EventEmitter {
   private players: PlayerState[];
@@ -58,12 +60,15 @@ export class Game extends EventEmitter {
       }
 
       this.rounds = [
+        new Pauze('Zet u ne keer klaar voor de quiz, we beginnen om'),
         new Overzicht(),
         new DrieZesNegen(episode.drieZesNegen),
         new Overzicht(),
         new OpenDeur(this.players, episode.openDeur),
         new Overzicht(),
         new Puzzel(this.players, episode.puzzel),
+        new Overzicht(),
+        new Pauze('Pakt u een hapje en een drankje, we gaan herbeginnen om'),
         new Overzicht(),
         new Galerij(this.players, episode.galerij),
         new Overzicht(),
@@ -85,6 +90,10 @@ export class Game extends EventEmitter {
   }
 
   public startTime(): void {
+    if (this.timerIsRunning) {
+      log.info('Timer is already running');
+      return;
+    }
     if (!(this.getCurrentRound() instanceof Overzicht)) {
       log.debug('startTime');
       this.emit(GameEmitType.GameEvent, GameEvent.StartTime);
@@ -108,6 +117,10 @@ export class Game extends EventEmitter {
   }
 
   public stopTime(): void {
+    if (!this.timerIsRunning) {
+      log.info('Timer is already stopped');
+      return;
+    }
     log.debug('stopTime');
     let playSound = true;
     this.players.forEach((player) => {
@@ -290,6 +303,11 @@ export class Game extends EventEmitter {
     this.emitGameStateUpdate();
   }
 
+  public toggleJury(): void {
+    this.juryStatus = !this.juryStatus;
+    this.emitGameStateUpdate();
+  }
+
   public focusPlayer(playerIndex: number): void {
     this.players.forEach((player) => {
       player.focused = false;
@@ -297,6 +315,19 @@ export class Game extends EventEmitter {
     if (playerIndex >= 0 && playerIndex < this.players.length) {
       this.players[playerIndex].focused = true;
     }
+    this.emitGameStateUpdate();
+  }
+
+  public setPauseTargetTime(targetTime: string): void {
+    this.rounds.forEach((round) => {
+      if (round.getState().roundName === RoundName.Pauze) {
+        const [targetHours, targetMinutes] = targetTime.split(':');
+        const targetTimeDate = new Date(
+          new Date().setHours(parseInt(targetHours), parseInt(targetMinutes), 0)
+        );
+        (round as Pauze).targetTime = targetTimeDate;
+      }
+    });
     this.emitGameStateUpdate();
   }
 

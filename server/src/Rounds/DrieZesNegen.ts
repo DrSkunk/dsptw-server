@@ -1,8 +1,8 @@
-import { RoundName } from "../../../common/src/models/RoundName";
-import { DrieZesNegenState } from "../../../common/src/models/Rounds/DrieZesNegenState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { DrieZesNegenState } from "de-slimste-common/src/models/Rounds/DrieZesNegenState";
 import { Round } from "./Round";
 import { log } from "../Log";
-import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 
 export class DrieZesNegen extends Round {
   private state: DrieZesNegenState;

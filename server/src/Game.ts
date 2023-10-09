@@ -1,8 +1,8 @@
 import fs from "fs";
 import { EventEmitter } from "events";
-import { GameState } from "../../common/src/models/GameState";
-import { PlayerState } from "../../common/src/models/PlayerState";
-import { ViewType } from "../../common/src/models/ViewType";
+import { GameState } from "de-slimste-common/src/models/GameState";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { ViewType } from "de-slimste-common/src/models/ViewType";
 import { log } from "./Log";
 import { CollectiefGeheugen } from "./Rounds/CollectiefGeheugen";
 import { DrieZesNegen } from "./Rounds/DrieZesNegen";
@@ -15,10 +15,10 @@ import { Round } from "./Rounds/Round";
 import { Overzicht } from "./Rounds/Overzicht";
 import { config } from "./Config";
 import { GameEmitType } from "./GameEmitType";
-import { GameEvent } from "../../common/src/models/GameEvent";
+import { GameEvent } from "de-slimste-common/src/models/GameEvent";
 import emptyEpisode from "./emptyEpisode.json";
 import emptyFinale from "./emptyFinale.json";
-import { EpisodeModel } from "../../common/src/models/EpisodeModel";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 
 export class Game extends EventEmitter {
   private players: PlayerState[];

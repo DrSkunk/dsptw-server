@@ -1,4 +1,4 @@
-import { RoundState } from "../../../common/src/models/Rounds/RoundState";
+import { RoundState } from "de-slimste-common/src/models/Rounds/RoundState";
 
 export abstract class Round {
   // tslint:disable-next-line: max-line-length

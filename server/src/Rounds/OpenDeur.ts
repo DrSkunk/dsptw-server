@@ -1,8 +1,8 @@
-import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
-import { PlayerState } from "../../../common/src/models/PlayerState";
-import { RoundName } from "../../../common/src/models/RoundName";
-import { OpenDeurState } from "../../../common/src/models/Rounds/OpenDeurState";
-import { ViewType } from "../../../common/src/models/ViewType";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { OpenDeurState } from "de-slimste-common/src/models/Rounds/OpenDeurState";
+import { ViewType } from "de-slimste-common/src/models/ViewType";
 import { LowestTimeRound } from "./LowestTimeRound";
 
 export class OpenDeur extends LowestTimeRound {

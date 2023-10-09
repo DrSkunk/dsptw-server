@@ -1,7 +1,7 @@
-import { PlayerState } from "../../../common/src/models/PlayerState";
-import { RoundName } from "../../../common/src/models/RoundName";
-import { FinaleState } from "../../../common/src/models/Rounds/FinaleState";
-import { FinaleModel } from "../../../common/src/models/FinaleModel";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { FinaleState } from "de-slimste-common/src/models/Rounds/FinaleState";
+import { FinaleModel } from "de-slimste-common/src/models/FinaleModel";
 import { log } from "../Log";
 import { Round } from "./Round";
 import { config } from "../Config";

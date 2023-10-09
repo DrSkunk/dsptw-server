@@ -1,7 +1,7 @@
-import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
-import { PlayerState } from "../../../common/src/models/PlayerState";
-import { RoundName } from "../../../common/src/models/RoundName";
-import { PuzzelState } from "../../../common/src/models/Rounds/PuzzelState";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { PuzzelState } from "de-slimste-common/src/models/Rounds/PuzzelState";
 import { LowestTimeRound } from "./LowestTimeRound";
 import shuffleSeed from "shuffle-seed";
 

@@ -1,4 +1,4 @@
-import { PlayerState } from "../../../common/src/models/PlayerState";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
 import { log } from "../Log";
 import { Round } from "./Round";
 

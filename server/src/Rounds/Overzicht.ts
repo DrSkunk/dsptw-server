@@ -1,5 +1,5 @@
 import { Round } from "./Round";
-import { RoundName } from "../../../common/src/models/RoundName";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
 
 export class Overzicht extends Round {
   public correctAnswer(): { scoreForPlayer: number } | {

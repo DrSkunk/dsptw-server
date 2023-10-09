@@ -1,9 +1,9 @@
-import { PlayerState } from "../../../common/src/models/PlayerState";
-import { RoundName } from "../../../common/src/models/RoundName";
-import { GalerijState } from "../../../common/src/models/Rounds/GalerijState";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { GalerijState } from "de-slimste-common/src/models/Rounds/GalerijState";
 import { LowestTimeRound } from "./LowestTimeRound";
 import { log } from "../Log";
-import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 
 export class Galerij extends LowestTimeRound {
   private state: GalerijState;

@@ -1,9 +1,9 @@
-import { PlayerState } from "../../../common/src/models/PlayerState";
-import { RoundName } from "../../../common/src/models/RoundName";
-import { CollectiefGeheugenState } from "../../../common/src/models/Rounds/CollectiefGeheugenState";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { RoundName } from "de-slimste-common/src/models/RoundName";
+import { CollectiefGeheugenState } from "de-slimste-common/src/models/Rounds/CollectiefGeheugenState";
 import { LowestTimeRound } from "./LowestTimeRound";
-import { ViewType } from "../../../common/src/models/ViewType";
-import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
+import { ViewType } from "de-slimste-common/src/models/ViewType";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 
 export class CollectiefGeheugen extends LowestTimeRound {
   private state: CollectiefGeheugenState;

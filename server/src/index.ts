@@ -1,10 +1,10 @@
 import WebSocket, { AddressInfo } from "ws";
 import express from "express";
 import http from "http";
-import { GameState } from "../../common/src/models/GameState";
-import { SocketCommand } from "../../common/src/models/SocketCommand";
-import { SocketEvent } from "../../common/src/models/SocketEvent";
-import { GameEvent } from "../../common/src/models/GameEvent";
+import { GameState } from "de-slimste-common/src/models/GameState";
+import { SocketCommand } from "de-slimste-common/src/models/SocketCommand";
+import { SocketEvent } from "de-slimste-common/src/models/SocketEvent";
+import { GameEvent } from "de-slimste-common/src/models/GameEvent";
 import { Game } from "./Game";
 import { log } from "./Log";
 import { version } from "../package.json";

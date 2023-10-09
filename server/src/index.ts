@@ -120,7 +120,7 @@ game.on(GameEmitType.GameEvent, (gameEvent: GameEvent) => {
   broadcast(SocketEvent.GameEvent, gameEvent);
 });
 
-function broadcast(event: string, data: any) {
+function broadcast(event: string, data: unknown) {
   for (const socket of sockets) {
     socket.send(JSON.stringify({
       event,

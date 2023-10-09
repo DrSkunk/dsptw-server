@@ -3,18 +3,19 @@ import { RoundName } from "../../../common/src/models/RoundName";
 import { GalerijState } from "../../../common/src/models/Rounds/GalerijState";
 import { LowestTimeRound } from "./LowestTimeRound";
 import { log } from "../Log";
+import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
 
 export class Galerij extends LowestTimeRound {
   private state: GalerijState;
 
-  constructor(players: PlayerState[], questions: any) {
+  constructor(players: PlayerState[], questions: EpisodeModel["galerij"]) {
     super(players);
     this.state = {
       roundName: RoundName.Galerij,
       currentImageIndex: -1,
       currentQuestionSeriesIndex: 0,
-      questions: questions.map((series: any[]) =>
-        series.map((answer: any) => ({ answer, found: false }))
+      questions: questions.map((series: string[]) =>
+        series.map((answer: string) => ({ answer, found: false }))
       ),
     };
   }
@@ -24,7 +25,7 @@ export class Galerij extends LowestTimeRound {
       .found = true;
     const answersFound =
       this.state.questions[this.state.currentQuestionSeriesIndex].filter(
-        (answer) => answer.found
+        (answer) => answer.found,
       ).length;
     const allAnswersFound = answersFound === 10;
     return { scoreForPlayer: 15, allAnswersFound };

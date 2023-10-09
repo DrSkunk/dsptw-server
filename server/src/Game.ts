@@ -18,13 +18,14 @@ import { GameEmitType } from "./GameEmitType";
 import { GameEvent } from "../../common/src/models/GameEvent";
 import emptyEpisode from "./emptyEpisode.json";
 import emptyFinale from "./emptyFinale.json";
+import { EpisodeModel } from "../../common/src/models/EpisodeModel";
 
 export class Game extends EventEmitter {
   private players: PlayerState[];
   private roundIndex: number = 0;
   private rounds = Array<Round>();
   private timerIsRunning: boolean = false;
-  private timerInterval?: NodeJS.Timer;
+  private timerInterval?: NodeJS.Timeout;
   private juryStatus: boolean = false;
   private showAnswers: boolean = false;
 
@@ -39,19 +40,19 @@ export class Game extends EventEmitter {
       log.info(
         `Loading episode from ${config.staticAssets}/aflevering${episodeNumber}`,
       );
-      let episode;
+      let episode: EpisodeModel;
       let finale;
       try {
         episode = JSON.parse(
           fs.readFileSync(
             `${config.staticAssets}/aflevering${episodeNumber}/questions.json`,
           ).toString(),
-        );
+        ) as EpisodeModel;
       } catch (error) {
         log.error(
           `Error loading episode at location ${config.staticAssets}/aflevering${episodeNumber}/questions.json. Loading empty episode instead`,
         );
-        episode = emptyEpisode;
+        episode = emptyEpisode as EpisodeModel;
       }
 
       try {
@@ -140,7 +141,7 @@ export class Game extends EventEmitter {
 
     this.timerIsRunning = false;
     if (this.timerInterval) {
-      clearTimeout(this.timerInterval);
+      clearInterval(this.timerInterval);
     } else {
       playSound = false;
     }

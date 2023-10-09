@@ -3,18 +3,25 @@ import { RoundName } from "../../../common/src/models/RoundName";
 import { CollectiefGeheugenState } from "../../../common/src/models/Rounds/CollectiefGeheugenState";
 import { LowestTimeRound } from "./LowestTimeRound";
 import { ViewType } from "../../../common/src/models/ViewType";
+import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
 
 export class CollectiefGeheugen extends LowestTimeRound {
   private state: CollectiefGeheugenState;
 
-  constructor(players: PlayerState[], questions: any) {
+  constructor(
+    players: PlayerState[],
+    questions: EpisodeModel["collectiefGeheugen"],
+  ) {
     super(players);
     this.state = {
       roundName: RoundName.CollectiefGeheugen,
       currentQuestionIndex: 0,
       currentView: ViewType.Videos,
-      questions: questions.map((answers: any[]) => ({
-        answers: answers.map((answer: any) => ({ text: answer, found: false })),
+      questions: questions.map((answers: string[]) => ({
+        answers: answers.map((answer: string) => ({
+          text: answer,
+          found: false,
+        })),
       })),
     };
   }
@@ -33,7 +40,7 @@ export class CollectiefGeheugen extends LowestTimeRound {
 
     const answersFound =
       this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found
+        (answer) => answer.found,
       ).length;
     const allAnswersFound = answersFound === 5;
 

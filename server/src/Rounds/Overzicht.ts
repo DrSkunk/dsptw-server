@@ -2,9 +2,7 @@ import { Round } from "./Round";
 import { RoundName } from "../../../common/src/models/RoundName";
 
 export class Overzicht extends Round {
-  public correctAnswer(
-    foundIndex?: number | undefined,
-  ): { scoreForPlayer: number } | {
+  public correctAnswer(): { scoreForPlayer: number } | {
     scoreForOtherPlayer: number;
     otherPlayerId: number;
   } {

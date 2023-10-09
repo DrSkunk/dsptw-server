@@ -1,3 +1,4 @@
+import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
 import { PlayerState } from "../../../common/src/models/PlayerState";
 import { RoundName } from "../../../common/src/models/RoundName";
 import { PuzzelState } from "../../../common/src/models/Rounds/PuzzelState";
@@ -7,16 +8,19 @@ import shuffleSeed from "shuffle-seed";
 export class Puzzel extends LowestTimeRound {
   private state: PuzzelState;
 
-  constructor(players: PlayerState[], puzzles: any) {
+  constructor(players: PlayerState[], puzzles: EpisodeModel["puzzel"]) {
     super(players);
 
-    const allPuzzles = puzzles.map((puzzle: any) => {
-      const answers = puzzle.map((group: { answer: any }) => ({
+    const allPuzzles = puzzles.map((puzzle: {
+      answer: string;
+      words: [string, string, string, string];
+    }[]) => {
+      const answers = puzzle.map((group: { answer: string }) => ({
         text: group.answer,
         found: false,
       }));
-      let grid: { text: any; answerIndex: any }[] = [];
-      puzzle.forEach((group: { words: any[] }, answerIndex: any) => {
+      const grid: { text: string; answerIndex: number }[] = [];
+      puzzle.forEach((group: { words: string[] }, answerIndex: number) => {
         group.words.forEach((word) => {
           grid.push({
             text: word,
@@ -42,7 +46,7 @@ export class Puzzel extends LowestTimeRound {
       .found = true;
     const answersFound =
       this.state.puzzles[this.state.currentPuzzleIndex].answers.filter(
-        (answer) => answer.found
+        (answer) => answer.found,
       ).length;
     const allAnswersFound = answersFound === 3;
     return { scoreForPlayer: 30, allAnswersFound };

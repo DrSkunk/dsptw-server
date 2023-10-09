@@ -2,12 +2,13 @@ import { RoundName } from "../../../common/src/models/RoundName";
 import { DrieZesNegenState } from "../../../common/src/models/Rounds/DrieZesNegenState";
 import { Round } from "./Round";
 import { log } from "../Log";
+import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
 
 export class DrieZesNegen extends Round {
   private state: DrieZesNegenState;
   private currentPlayerId = 0;
 
-  constructor(questions: any) {
+  constructor(questions: EpisodeModel["drieZesNegen"]) {
     super();
     this.state = {
       roundName: RoundName.DrieZesNegen,

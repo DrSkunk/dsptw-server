@@ -1,3 +1,4 @@
+import { EpisodeModel } from "../../../common/src/models/EpisodeModel";
 import { PlayerState } from "../../../common/src/models/PlayerState";
 import { RoundName } from "../../../common/src/models/RoundName";
 import { OpenDeurState } from "../../../common/src/models/Rounds/OpenDeurState";
@@ -7,15 +8,20 @@ import { LowestTimeRound } from "./LowestTimeRound";
 export class OpenDeur extends LowestTimeRound {
   private state: OpenDeurState;
 
-  constructor(players: PlayerState[], questions: any) {
+  constructor(players: PlayerState[], questions: EpisodeModel["openDeur"]) {
     super(players);
     this.state = {
       roundName: RoundName.OpenDeur,
       currentQuestionIndex: 0,
       currentView: ViewType.Videos,
-      questions: questions.map((question: any) => ({
+      questions: questions.map((
+        question: {
+          question: string;
+          answers: [string, string, string, string];
+        },
+      ) => ({
         question: question.question,
-        answers: question.answers.map((answer: any) => ({
+        answers: question.answers.map((answer: string) => ({
           text: answer,
           found: false,
         })),
@@ -28,7 +34,7 @@ export class OpenDeur extends LowestTimeRound {
       .found = true;
     const answersFound =
       this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found
+        (answer) => answer.found,
       ).length;
     const allAnswersFound = answersFound === 4;
     return { scoreForPlayer: 20, allAnswersFound };

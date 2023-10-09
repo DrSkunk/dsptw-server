@@ -1,6 +1,7 @@
 import { PlayerState } from "../../../common/src/models/PlayerState";
 import { RoundName } from "../../../common/src/models/RoundName";
 import { FinaleState } from "../../../common/src/models/Rounds/FinaleState";
+import { FinaleModel } from "../../../common/src/models/FinaleModel";
 import { log } from "../Log";
 import { Round } from "./Round";
 import { config } from "../Config";
@@ -11,7 +12,7 @@ export class Finale extends Round {
   private currentAnsweringPlayerIdIndex = 0;
   private players: PlayerState[];
 
-  constructor(players: PlayerState[], finale: any) {
+  constructor(players: PlayerState[], finale: FinaleModel) {
     super();
     this.players = players;
     this.state = {
@@ -19,9 +20,9 @@ export class Finale extends Round {
       currentQuestionIndex: 0,
       questions: finale.questions
         .slice(finale.questionIndex)
-        .map((question: { question: any; answers: any[] }) => ({
+        .map((question: { question: string; answers: string[] }) => ({
           question: question.question,
-          answers: question.answers.map((answer: any) => ({
+          answers: question.answers.map((answer: string) => ({
             text: answer,
             found: false,
           })),
@@ -38,7 +39,7 @@ export class Finale extends Round {
       .found = true;
     const answersFound =
       this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found
+        (answer) => answer.found,
       ).length;
     const allAnswersFound = answersFound === 5;
     return {

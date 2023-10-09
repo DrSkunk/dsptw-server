@@ -14,28 +14,28 @@ export class OpenDeur extends LowestTimeRound {
       roundName: RoundName.OpenDeur,
       currentQuestionIndex: 0,
       currentView: ViewType.Videos,
-      questions: questions.map((
-        question: {
+      questions: questions.map(
+        (question: {
           question: string;
           answers: [string, string, string, string];
-        },
-      ) => ({
-        question: question.question,
-        answers: question.answers.map((answer: string) => ({
-          text: answer,
-          found: false,
-        })),
-      })),
+        }) => ({
+          question: question.question,
+          answers: question.answers.map((answer: string) => ({
+            text: answer,
+            found: false,
+          })),
+        }),
+      ),
     };
   }
 
   public correctAnswer(foundIndex: number) {
-    this.state.questions[this.state.currentQuestionIndex].answers[foundIndex]
-      .found = true;
-    const answersFound =
-      this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found,
-      ).length;
+    this.state.questions[this.state.currentQuestionIndex].answers[
+      foundIndex
+    ].found = true;
+    const answersFound = this.state.questions[
+      this.state.currentQuestionIndex
+    ].answers.filter((answer) => answer.found).length;
     const allAnswersFound = answersFound === 4;
     return { scoreForPlayer: 20, allAnswersFound };
   }

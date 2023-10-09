@@ -97,14 +97,18 @@ socketServer.on("connection", (socket) => {
         log.warn("not a valid socket command");
     }
   });
-  socket.send(JSON.stringify({
-    event: SocketEvent.Version,
-    data: version,
-  }));
-  socket.send(JSON.stringify({
-    event: SocketEvent.GameStateUpdate,
-    data: game.getState(),
-  }));
+  socket.send(
+    JSON.stringify({
+      event: SocketEvent.Version,
+      data: version,
+    }),
+  );
+  socket.send(
+    JSON.stringify({
+      event: SocketEvent.GameStateUpdate,
+      data: game.getState(),
+    }),
+  );
   socket.on("close", () => {
     log.debug("Socket connection closed");
     sockets.splice(sockets.indexOf(socket), 1);
@@ -122,10 +126,12 @@ game.on(GameEmitType.GameEvent, (gameEvent: GameEvent) => {
 
 function broadcast(event: string, data: unknown) {
   for (const socket of sockets) {
-    socket.send(JSON.stringify({
-      event,
-      data,
-    }));
+    socket.send(
+      JSON.stringify({
+        event,
+        data,
+      }),
+    );
   }
 }
 

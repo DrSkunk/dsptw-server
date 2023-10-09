@@ -20,9 +20,11 @@ function eqSet(a: Set<unknown>, b: Set<unknown>) {
   }
   const aa = Array.from(a);
   const bb = Array.from(b);
-  return aa.filter(function (i) {
-    return bb.indexOf(i) < 0;
-  }).length == 0;
+  return (
+    aa.filter(function (i) {
+      return bb.indexOf(i) < 0;
+    }).length == 0
+  );
 }
 
 class Config {
@@ -35,9 +37,9 @@ class Config {
       ) as ConfigFile;
     } catch (error) {
       throw new Error(
-        `Could not read config file. Please make sure config.json exists at the location ${
-          path.resolve("../config.json")
-        } and is valid JSON.`,
+        `Could not read config file. Please make sure config.json exists at the location ${path.resolve(
+          "../config.json",
+        )} and is valid JSON.`,
       );
     }
     const keys = new Set([
@@ -62,4 +64,4 @@ class Config {
   }
 }
 
-export const config = (new Config()).config;
+export const config = new Config().config;

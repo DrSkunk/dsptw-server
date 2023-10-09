@@ -44,9 +44,11 @@ export class Game extends EventEmitter {
       let finale;
       try {
         episode = JSON.parse(
-          fs.readFileSync(
-            `${config.staticAssets}/aflevering${episodeNumber}/questions.json`,
-          ).toString(),
+          fs
+            .readFileSync(
+              `${config.staticAssets}/aflevering${episodeNumber}/questions.json`,
+            )
+            .toString(),
         ) as EpisodeModel;
       } catch (error) {
         log.error(
@@ -115,7 +117,7 @@ export class Game extends EventEmitter {
       // this.timerStarted = Date.now();
       // this.timerTimeout = setTimeout(this.stopTime.bind(this), this.getCurrentPlayer().time);
       this.timerInterval = setInterval(() => {
-        const newTime = this.getCurrentPlayer().time -= 200;
+        const newTime = (this.getCurrentPlayer().time -= 200);
         if (newTime <= 0) {
           this.getCurrentPlayer().time = 0;
           this.stopTime();
@@ -306,9 +308,10 @@ export class Game extends EventEmitter {
     const currentRound = this.getCurrentRound();
     return {
       episode: config.episode,
-      currentPlayers: (currentRound instanceof Finale)
-        ? currentRound.currentPlayerIds
-        : [0, 1, 2],
+      currentPlayers:
+        currentRound instanceof Finale
+          ? currentRound.currentPlayerIds
+          : [0, 1, 2],
       currentPlayer: this.getCurrentRound().getCurrentPlayerId(),
       players: this.players,
       roundState: this.getCurrentRound().getState(),

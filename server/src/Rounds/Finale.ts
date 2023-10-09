@@ -35,12 +35,12 @@ export class Finale extends Round {
   }
 
   public correctAnswer(answerIndex: number) {
-    this.state.questions[this.state.currentQuestionIndex].answers[answerIndex]
-      .found = true;
-    const answersFound =
-      this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found,
-      ).length;
+    this.state.questions[this.state.currentQuestionIndex].answers[
+      answerIndex
+    ].found = true;
+    const answersFound = this.state.questions[
+      this.state.currentQuestionIndex
+    ].answers.filter((answer) => answer.found).length;
     const allAnswersFound = answersFound === 5;
     return {
       scoreForOtherPlayer: -20,
@@ -99,8 +99,8 @@ export class Finale extends Round {
       }
     }
 
-    this.currentPlayerIds = this.currentPlayerIds.filter((playerId) =>
-      playerId !== playerToBeRemovedId
+    this.currentPlayerIds = this.currentPlayerIds.filter(
+      (playerId) => playerId !== playerToBeRemovedId,
     );
 
     const removedPlayer = this.players[playerToBeRemovedId];

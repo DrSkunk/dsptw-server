@@ -8,7 +8,8 @@
     "start": "bun src/index.ts",
     "dev": "bun --watch src/index.ts",
     "build": "bun build --compile src/index.ts --outfile=server",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts && prettier --check .",
+    "fix": "eslint . --ext .ts --fix && prettier --write ."
   },
   "keywords": [],
   "author": "Sebastiaan Jansen",
@@ -28,6 +29,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "prettier": "^3.0.3",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.2.2"
   }

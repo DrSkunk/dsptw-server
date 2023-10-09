@@ -38,10 +38,9 @@ export class CollectiefGeheugen extends LowestTimeRound {
     answers[answerIndex].found = true;
     answers[answerIndex].score = score;
 
-    const answersFound =
-      this.state.questions[this.state.currentQuestionIndex].answers.filter(
-        (answer) => answer.found,
-      ).length;
+    const answersFound = this.state.questions[
+      this.state.currentQuestionIndex
+    ].answers.filter((answer) => answer.found).length;
     const allAnswersFound = answersFound === 5;
 
     return { scoreForPlayer: score, allAnswersFound };

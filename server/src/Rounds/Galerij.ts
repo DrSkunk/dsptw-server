@@ -15,18 +15,18 @@ export class Galerij extends LowestTimeRound {
       currentImageIndex: -1,
       currentQuestionSeriesIndex: 0,
       questions: questions.map((series: string[]) =>
-        series.map((answer: string) => ({ answer, found: false }))
+        series.map((answer: string) => ({ answer, found: false })),
       ),
     };
   }
 
   public correctAnswer(imageIndex: number) {
-    this.state.questions[this.state.currentQuestionSeriesIndex][imageIndex]
-      .found = true;
-    const answersFound =
-      this.state.questions[this.state.currentQuestionSeriesIndex].filter(
-        (answer) => answer.found,
-      ).length;
+    this.state.questions[this.state.currentQuestionSeriesIndex][
+      imageIndex
+    ].found = true;
+    const answersFound = this.state.questions[
+      this.state.currentQuestionSeriesIndex
+    ].filter((answer) => answer.found).length;
     const allAnswersFound = answersFound === 10;
     return { scoreForPlayer: 15, allAnswersFound };
   }

@@ -19,8 +19,8 @@ export abstract class LowestTimeRound extends Round {
     if (this.playerStartingOrder.length >= 2) {
       // next player is the one who has the lowest score *now*
       this.playerStartingOrder.shift();
-      this.playerStartingOrder.sort((a, b) =>
-        this.players[a].time - this.players[b].time
+      this.playerStartingOrder.sort(
+        (a, b) => this.players[a].time - this.players[b].time,
       );
       const firstPlayer = this.playerStartingOrder[0];
 
@@ -44,11 +44,11 @@ export abstract class LowestTimeRound extends Round {
   }
 
   public init() {
-    this.playerStartingOrder.sort((a, b) =>
-      this.players[a].time - this.players[b].time
+    this.playerStartingOrder.sort(
+      (a, b) => this.players[a].time - this.players[b].time,
     );
-    this.playerCompleteOrder.sort((a, b) =>
-      this.players[a].time - this.players[b].time
+    this.playerCompleteOrder.sort(
+      (a, b) => this.players[a].time - this.players[b].time,
     );
   }
 }

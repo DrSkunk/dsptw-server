@@ -1,6 +1,6 @@
 {
   "port": 8080,
-  "staticAssets": "/mnt/d/DSPTW/static",
+  "staticAssets": "./static",
   "staticClient": "../client/build",
   "episode": 1,
   "presenterName": "Erica",

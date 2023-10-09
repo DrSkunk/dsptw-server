@@ -1,6 +1,6 @@
 {
-  "name": "de-slimste-persoon",
-  "version": "2.0.0",
+  "name": "de-slimste-common",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "workspaces": [
-    "client",
-    "server",
-    "common"
-  ]
+  "license": "ISC"
 }

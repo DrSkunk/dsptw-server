@@ -1,0 +1,120 @@
+{
+  "drieZesNegen": [
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    },
+    {
+      "question": "",
+      "answer": ""
+    }
+  ],
+  "openDeur": [
+    {
+      "question": "",
+      "answers": ["", "", "", ""]
+    },
+    {
+      "question": "",
+      "answers": ["", "", "", ""]
+    },
+    {
+      "question": "",
+      "answers": ["", "", "", ""]
+    }
+  ],
+  "puzzel": [
+    [
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      }
+    ],
+    [
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      }
+    ],
+    [
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      },
+      {
+        "answer": "",
+        "words": ["", "", "", ""]
+      }
+    ]
+  ],
+  "galerij": [
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""]
+  ],
+  "collectiefGeheugen": [
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""]
+  ]
+}

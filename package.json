@@ -8,7 +8,7 @@
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sebastiaan Jansen",
   "license": "ISC",
   "workspaces": [
     "client",

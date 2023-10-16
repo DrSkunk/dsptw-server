@@ -46,6 +46,7 @@ class Log {
       "\x1b[0m",
     );
   }
+
   private getTimestamp() {
     return new Date().toISOString();
   }

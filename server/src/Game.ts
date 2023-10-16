@@ -1,8 +1,5 @@
-import fs from "fs";
-import { EventEmitter } from "events";
-import { GameState } from "de-slimste-common/src/models/GameState";
-import { PlayerState } from "de-slimste-common/src/models/PlayerState";
-import { ViewType } from "de-slimste-common/src/models/ViewType";
+import { config } from "./Config";
+import { GameEmitType } from "./GameEmitType";
 import { log } from "./Log";
 import { CollectiefGeheugen } from "./Rounds/CollectiefGeheugen";
 import { DrieZesNegen } from "./Rounds/DrieZesNegen";
@@ -10,23 +7,32 @@ import { Finale } from "./Rounds/Finale";
 import { Galerij } from "./Rounds/Galerij";
 import { LowestTimeRound } from "./Rounds/LowestTimeRound";
 import { OpenDeur } from "./Rounds/OpenDeur";
+import { Overzicht } from "./Rounds/Overzicht";
 import { Puzzel } from "./Rounds/Puzzel";
 import { Round } from "./Rounds/Round";
-import { Overzicht } from "./Rounds/Overzicht";
-import { config } from "./Config";
-import { GameEmitType } from "./GameEmitType";
-import { GameEvent } from "de-slimste-common/src/models/GameEvent";
 import emptyEpisode from "./emptyEpisode.json";
 import emptyFinale from "./emptyFinale.json";
 import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
+import { GameEvent } from "de-slimste-common/src/models/GameEvent";
+import { GameState } from "de-slimste-common/src/models/GameState";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
+import { ViewType } from "de-slimste-common/src/models/ViewType";
+import { EventEmitter } from "events";
+import fs from "fs";
 
 export class Game extends EventEmitter {
   private players: PlayerState[];
+
   private roundIndex: number = 0;
+
   private rounds = Array<Round>();
+
   private timerIsRunning: boolean = false;
+
   private timerInterval?: NodeJS.Timeout;
+
   private juryStatus: boolean = false;
+
   private showAnswers: boolean = false;
 
   constructor() {

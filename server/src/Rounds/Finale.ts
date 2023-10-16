@@ -1,15 +1,18 @@
+import { config } from "../Config";
+import { log } from "../Log";
+import { Round } from "./Round";
+import { FinaleModel } from "de-slimste-common/src/models/FinaleModel";
 import { PlayerState } from "de-slimste-common/src/models/PlayerState";
 import { RoundName } from "de-slimste-common/src/models/RoundName";
 import { FinaleState } from "de-slimste-common/src/models/Rounds/FinaleState";
-import { FinaleModel } from "de-slimste-common/src/models/FinaleModel";
-import { log } from "../Log";
-import { Round } from "./Round";
-import { config } from "../Config";
 
 export class Finale extends Round {
   public currentPlayerIds: number[] = [0, 1, 2];
+
   private state: FinaleState;
+
   private currentAnsweringPlayerIdIndex = 0;
+
   private players: PlayerState[];
 
   constructor(players: PlayerState[], finale: FinaleModel) {
@@ -56,7 +59,7 @@ export class Finale extends Round {
   public nextQuestion() {
     this.state.currentQuestionIndex++;
     log.info(
-      "Current Finale question index: " + this.state.currentQuestionIndex,
+      `Current Finale question index: ${this.state.currentQuestionIndex}`,
     );
   }
 

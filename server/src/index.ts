@@ -1,152 +1,62 @@
-import WebSocket, { AddressInfo } from "ws";
-import express from "express";
-import http from "http";
+import { version } from "../package.json";
+import ApiServer from "./ApiServer";
+import { Game } from "./Game";
+import { GameEmitType } from "./GameEmitType";
+import { log } from "./Log";
+import { GameEvent } from "de-slimste-common/src/models/GameEvent";
 import { GameState } from "de-slimste-common/src/models/GameState";
 import { SocketCommand } from "de-slimste-common/src/models/SocketCommand";
 import { SocketEvent } from "de-slimste-common/src/models/SocketEvent";
-import { GameEvent } from "de-slimste-common/src/models/GameEvent";
-import { Game } from "./Game";
-import { log } from "./Log";
-import { version } from "../package.json";
-import { config } from "./Config";
-import { GameEmitType } from "./GameEmitType";
 
-const app = express();
-app.use("/static", express.static(config.staticAssets));
-app.use(express.static(config.staticClient));
-const server = http.createServer(app);
-const socketServer = new WebSocket.Server({ server });
+export { version };
 
-const sockets: WebSocket[] = [];
+log.info("Starting De slimste Persoon server version " + version);
 
 const game = new Game();
-await game.loadEpisode(config.episode);
-
-socketServer.on("connection", (socket) => {
-  log.debug("New socket connection incoming");
-  socket.on("message", (rawData) => {
-    log.debug(`received from a client: ${rawData}`);
-
-    let data;
-    try {
-      data = JSON.parse(rawData.toString());
-    } catch (e) {
-      log.warn("Received invalid JSON");
-      return;
-    }
-
-    switch (data.command as SocketCommand) {
-      case SocketCommand.StartTime:
-        game.startTime();
-        break;
-      case SocketCommand.StopTime:
-        game.stopTime();
-        break;
-      case SocketCommand.CorrectAnswer:
-        game.correctAnswer(data.foundIndex, data.playerIndex);
-        break;
-      case SocketCommand.NextQuestion:
-        game.nextQuestion();
-        break;
-      case SocketCommand.SetCurrentQuestion:
-        game.setCurrentQuestion(data.currentQuestion);
-        break;
-      case SocketCommand.ShowAllAnswers:
-        game.showAllAnswers();
-        break;
-      case SocketCommand.NextImage:
-        game.nextImage();
-        break;
-      case SocketCommand.SetView:
-        game.setView(data.view);
-        break;
-      case SocketCommand.PreviousRound:
-        game.previousRound();
-        break;
-      case SocketCommand.NextRound:
-        game.nextRound();
-        break;
-      case SocketCommand.NextStartingPlayer:
-        game.nextStartingPlayer();
-        break;
-      case SocketCommand.NextPlayerToComplete:
-        game.nextPlayerToComplete();
-        break;
-      case SocketCommand.SetPlayerName:
-        game.setPlayerName(data.playerIndex, data.name);
-        break;
-      case SocketCommand.SetPlayerTime:
-        game.setPlayerTime(data.playerIndex, data.time);
-        break;
-      case SocketCommand.SetPlayerCameraLink:
-        game.setPlayerCameraLink(data.playerIndex, data.cameraLink);
-        break;
-      case SocketCommand.ShowJury:
-        game.showJury();
-        break;
-      case SocketCommand.HideJury:
-        game.hideJury();
-        break;
-      case SocketCommand.PlayVideo:
-        broadcast(SocketEvent.PlayVideo, data.videoIndex);
-        break;
-      case SocketCommand.playApplause:
-        broadcast(SocketEvent.GameEvent, GameEvent.Applause);
-        break;
-      default:
-        log.warn("not a valid socket command");
-    }
-  });
-  socket.send(
-    JSON.stringify({
-      event: SocketEvent.Version,
-      data: version,
-    }),
-  );
-  socket.send(
-    JSON.stringify({
-      event: SocketEvent.GameStateUpdate,
-      data: game.getState(),
-    }),
-  );
-  socket.on("close", () => {
-    log.debug("Socket connection closed");
-    sockets.splice(sockets.indexOf(socket), 1);
-  });
-  sockets.push(socket);
-});
+const apiServer = new ApiServer();
 
 game.on(GameEmitType.GameStateUpdate, (gameState: GameState) => {
-  broadcast(SocketEvent.GameStateUpdate, gameState);
+  apiServer.broadcast(SocketEvent.GameStateUpdate, gameState);
 });
 
 game.on(GameEmitType.GameEvent, (gameEvent: GameEvent) => {
-  broadcast(SocketEvent.GameEvent, gameEvent);
+  apiServer.broadcast(SocketEvent.GameEvent, gameEvent);
 });
 
-function broadcast(event: string, data: unknown) {
-  for (const socket of sockets) {
-    socket.send(
-      JSON.stringify({
-        event,
-        data,
-      }),
-    );
-  }
-}
+apiServer.on(SocketCommand.StartTime, () => game.startTime());
+apiServer.on(SocketCommand.StopTime, () => game.stopTime());
+apiServer.on(SocketCommand.CorrectAnswer, (data) =>
+  game.correctAnswer(data.foundIndex, data.playerIndex),
+);
+apiServer.on(SocketCommand.NextQuestion, () => game.nextQuestion());
+apiServer.on(SocketCommand.SetCurrentQuestion, (data) =>
+  game.setCurrentQuestion(data.currentQuestion),
+);
+apiServer.on(SocketCommand.ShowAllAnswers, () => game.showAllAnswers());
+apiServer.on(SocketCommand.NextImage, () => game.nextImage());
+apiServer.on(SocketCommand.SetView, (data) => game.setView(data.view));
+apiServer.on(SocketCommand.PreviousRound, () => game.previousRound());
+apiServer.on(SocketCommand.NextRound, () => game.nextRound());
+apiServer.on(SocketCommand.NextStartingPlayer, () => game.nextStartingPlayer());
+apiServer.on(SocketCommand.NextPlayerToComplete, () =>
+  game.nextPlayerToComplete(),
+);
+apiServer.on(SocketCommand.SetPlayerName, (data) =>
+  game.setPlayerName(data.playerIndex, data.name),
+);
+apiServer.on(SocketCommand.SetPlayerTime, (data) =>
+  game.setPlayerTime(data.playerIndex, data.time),
+);
+apiServer.on(SocketCommand.SetPlayerCameraLink, (data) =>
+  game.setPlayerCameraLink(data.playerIndex, data.cameraLink),
+);
+apiServer.on(SocketCommand.ShowJury, () => game.showJury());
+apiServer.on(SocketCommand.HideJury, () => game.hideJury());
+apiServer.on(SocketCommand.PlayVideo, (data) =>
+  apiServer.broadcast(SocketEvent.PlayVideo, data.videoIndex),
+);
+apiServer.on(SocketCommand.playApplause, () =>
+  apiServer.broadcast(SocketEvent.GameEvent, GameEvent.Applause),
+);
 
-server.listen(config.port, () => {
-  const address = server.address() as AddressInfo;
-  if (!address) {
-    log.error("Error creating server");
-    process.exit(-1);
-  } else {
-    log.info(
-      `De slimste Preparees server with players view started on http://localhost:${address.port}`,
-    );
-    log.info(
-      `Presenter view available on http://localhost:${address.port}/?presenter=true`,
-    );
-    log.info(`Websocket available on ws://localhost:${address.port}`);
-  }
-});
+apiServer.start();

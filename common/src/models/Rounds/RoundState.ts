@@ -1,10 +1,10 @@
-import { CollectiefGeheugenState } from "./CollectiefGeheugenState";
-import { DrieZesNegenState } from "./DrieZesNegenState";
-import { FinaleState } from "./FinaleState";
-import { GalerijState } from "./GalerijState";
-import { OpenDeurState } from "./OpenDeurState";
-import { PuzzelState } from "./PuzzelState";
-import { OverzichtState } from "./OverzichtState";
+import type { CollectiefGeheugenState } from "./CollectiefGeheugenState";
+import type { DrieZesNegenState } from "./DrieZesNegenState";
+import type { FinaleState } from "./FinaleState";
+import type { GalerijState } from "./GalerijState";
+import type { OpenDeurState } from "./OpenDeurState";
+import type { PuzzelState } from "./PuzzelState";
+import type { OverzichtState } from "./OverzichtState";
 
 export type RoundState =
   | DrieZesNegenState

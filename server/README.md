@@ -23,11 +23,13 @@ Then build the client files with `npm run build`.
 ```json
 {
   "port": 8080,
-  "staticAssets": "your_static_folder",
-  "staticClient": "your_built_client_files",
+  "staticAssets": "./static",
+  "staticClient": "../client/build",
   "episode": 1,
   "presenterName": "Erica",
-  "presenterCamera": "https://obs.ninja/?view=",
+  "presenterCamera": "https://vdo.ninja/?view=",
+  "juryName": "Jerommeke",
+  "juryCamera": "https://vdo.ninja/?view=",
   "grandFinaleMode": false
 }
 ```
@@ -87,7 +89,7 @@ Then build the client files with `npm run build`.
 
 `presenterName` is what is shown in the interface under the camera view of the presenter.
 
-`presenterCamera` is an iframe which commonly uses obs.ninja so show a camera feed. It can also be an image link to show a still image.
+`presenterCamera` is an iframe which commonly uses vdo.ninja so show a camera feed. It can also be an image link to show a still image.
 
 `grandFinaleMode` If `true`, the finale round will be played with the two players with the _highest_ score. If `false`, the finale will be played with the two players with the _lowest_ score.
 

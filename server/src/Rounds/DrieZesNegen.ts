@@ -1,11 +1,12 @@
+import { log } from "../Log";
+import { Round } from "./Round";
+import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 import { RoundName } from "de-slimste-common/src/models/RoundName";
 import { DrieZesNegenState } from "de-slimste-common/src/models/Rounds/DrieZesNegenState";
-import { Round } from "./Round";
-import { log } from "../Log";
-import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 
 export class DrieZesNegen extends Round {
   private state: DrieZesNegenState;
+
   private currentPlayerId = 0;
 
   constructor(questions: EpisodeModel["drieZesNegen"]) {

@@ -1,8 +1,7 @@
 import { RoundState } from "de-slimste-common/src/models/Rounds/RoundState";
 
 export abstract class Round {
-  // tslint:disable-next-line: max-line-length
-  public abstract correctAnswer(foundIndex?: number):
+  public abstract correctAnswer(_foundIndex?: number):
     | { scoreForPlayer: number; allAnswersFound?: boolean }
     | {
         scoreForOtherPlayer: number;

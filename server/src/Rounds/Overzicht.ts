@@ -10,16 +10,22 @@ export class Overzicht extends Round {
       } {
     return { scoreForPlayer: 0 };
   }
+
   public nextQuestion(): void {}
+
   public getState() {
     return {
       roundName: RoundName.Overzicht,
     };
   }
+
   public calculateNextStartingPlayer(): void {}
+
   public calculateNextPlayerToComplete(): void {}
+
   public getCurrentPlayerId(): number {
     return -1;
   }
+
   public showAllAnswers(): void {}
 }

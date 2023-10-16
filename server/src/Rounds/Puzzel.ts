@@ -1,8 +1,8 @@
+import { LowestTimeRound } from "./LowestTimeRound";
 import { EpisodeModel } from "de-slimste-common/src/models/EpisodeModel";
 import { PlayerState } from "de-slimste-common/src/models/PlayerState";
 import { RoundName } from "de-slimste-common/src/models/RoundName";
 import { PuzzelState } from "de-slimste-common/src/models/Rounds/PuzzelState";
-import { LowestTimeRound } from "./LowestTimeRound";
 import shuffleSeed from "shuffle-seed";
 
 export class Puzzel extends LowestTimeRound {

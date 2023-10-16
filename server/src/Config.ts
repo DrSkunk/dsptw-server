@@ -1,6 +1,6 @@
+import { log } from "./Log";
 import fs from "fs";
 import path from "path";
-import { log } from "./Log";
 
 type ConfigFile = {
   port: number;
@@ -20,11 +20,7 @@ function eqSet(a: Set<unknown>, b: Set<unknown>) {
   }
   const aa = Array.from(a);
   const bb = Array.from(b);
-  return (
-    aa.filter(function (i) {
-      return bb.indexOf(i) < 0;
-    }).length == 0
-  );
+  return aa.filter((i) => bb.indexOf(i) < 0).length == 0;
 }
 
 class Config {
@@ -33,12 +29,12 @@ class Config {
   constructor() {
     try {
       this.config = JSON.parse(
-        fs.readFileSync("../config.json").toString(),
+        fs.readFileSync("./config.json").toString(),
       ) as ConfigFile;
     } catch (error) {
       throw new Error(
         `Could not read config file. Please make sure config.json exists at the location ${path.resolve(
-          "../config.json",
+          "./config.json",
         )} and is valid JSON.`,
       );
     }
@@ -55,8 +51,9 @@ class Config {
     ]);
     if (!eqSet(keys, new Set(Object.keys(this.config)))) {
       throw new Error(
-        "Settings file incomplete, the following settings must be set in config.json: " +
-          Array.from(keys).join(", "),
+        `Settings file incomplete, the following settings must be set in config.json: ${Array.from(
+          keys,
+        ).join(", ")}`,
       );
     }
     const type = this.config.grandFinaleMode ? "LOWEST" : "HIGHEST";
@@ -64,4 +61,4 @@ class Config {
   }
 }
 
-export const config = new Config().config;
+export const { config } = new Config();

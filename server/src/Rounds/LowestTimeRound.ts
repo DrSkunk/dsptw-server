@@ -1,10 +1,12 @@
-import { PlayerState } from "de-slimste-common/src/models/PlayerState";
 import { log } from "../Log";
 import { Round } from "./Round";
+import { PlayerState } from "de-slimste-common/src/models/PlayerState";
 
 export abstract class LowestTimeRound extends Round {
   private playerStartingOrder: number[] = [0, 1, 2];
+
   private playerCompleteOrder: number[] = [0, 1, 2];
+
   private players: PlayerState[];
 
   constructor(players: PlayerState[]) {

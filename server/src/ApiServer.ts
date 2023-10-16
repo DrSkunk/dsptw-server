@@ -1,8 +1,6 @@
-import { version } from "../package.json";
 import { config } from "./Config";
 import { log } from "./Log";
 import { SocketCommand } from "de-slimste-common/src/models/SocketCommand";
-import { SocketEvent } from "de-slimste-common/src/models/SocketEvent";
 import { EventEmitter } from "events";
 import express from "express";
 import http from "http";

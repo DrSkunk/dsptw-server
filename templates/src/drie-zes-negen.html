@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3-6-9</title>
+    <script>
+      document.template = "drie-zes-negen";
+      window.SPXGCTemplateDefinition = {
+        description: "3-6-9",
+        playserver: "OVERLAY",
+        playchannel: "1",
+        playlayer: "7",
+        webplayout: "7",
+        out: "manual",
+        uicolor: "2",
+        DataFields: [
+          {
+            field: "question",
+            ftype: "textarea",
+            title: "Question",
+            value: "3-6-9",
+          },
+          {
+            field: "questionNumber",
+            ftype: "number",
+            title: "Question number",
+            value: "1",
+          },
+        ],
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

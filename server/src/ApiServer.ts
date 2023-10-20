@@ -99,6 +99,7 @@ export default class HttpServer extends EventEmitter {
         this.#sockets.splice(this.#sockets.indexOf(socket), 1);
       });
       this.#sockets.push(socket);
+      this.emit("connection", socket);
     });
   }
 

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Players</title>
+    <script>
+      document.template = "players";
+
+      window.SPXGCTemplateDefinition = {
+        description: "Players",
+        webplayout: "8",
+        out: "manual",
+        uicolor: "2",
+        DataFields: [
+          {
+            field: "questionNumber",
+            ftype: "number",
+            title: "Question number",
+            value: "1",
+          },
+          {
+            field: "playerName1",
+            ftype: "textfield",
+            title: "Player 1 name",
+            value: "Player 1",
+          },
+          {
+            field: "playerName2",
+            ftype: "textfield",
+            title: "Player 2 name",
+            value: "Player 2",
+          },
+          {
+            field: "playerName3",
+            ftype: "textfield",
+            title: "Player 3 name",
+            value: "Player 3",
+          },
+          {
+            field: "playerScore1",
+            ftype: "number",
+            title: "Player 1 score",
+            value: "60",
+          },
+          {
+            field: "playerScore2",
+            ftype: "number",
+            title: "Player 2 score",
+            value: "60",
+          },
+          {
+            field: "playerScore3",
+            ftype: "number",
+            title: "Player 3 score",
+            value: "60",
+          },
+        ],
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

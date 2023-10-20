@@ -37,8 +37,22 @@ export class Game extends EventEmitter {
 
   constructor() {
     super();
-    this.rounds = [];
-    this.players = [];
+
+    this.players = [
+      {
+        time: 60000,
+        name: "player 1",
+      },
+      {
+        time: 60000,
+        name: "player 2",
+      },
+      {
+        time: 60000,
+        name: "player 3",
+      },
+    ];
+    this.rounds = [new Overzicht(), new DrieZesNegen()];
   }
 
   public async loadEpisode(episodeNumber: number) {
@@ -318,7 +332,7 @@ export class Game extends EventEmitter {
         currentRound instanceof Finale
           ? currentRound.currentPlayerIds
           : [0, 1, 2],
-      currentPlayer: this.getCurrentRound().getCurrentPlayerId(),
+      currentPlayer: currentRound.getCurrentPlayerId(),
       players: this.players,
       roundState: this.getCurrentRound().getState(),
       timerIsRunning: this.timerIsRunning,

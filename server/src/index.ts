@@ -15,6 +15,14 @@ log.info("Starting De slimste Persoon server version " + version);
 const game = new Game();
 const apiServer = new ApiServer();
 
+apiServer.on("connection", (socket) => {
+  const data = JSON.stringify({
+    event: SocketEvent.GameStateUpdate,
+    data: game.getState(),
+  });
+  socket.send(data);
+});
+
 game.on(GameEmitType.GameStateUpdate, (gameState: GameState) => {
   apiServer.broadcast(SocketEvent.GameStateUpdate, gameState);
 });

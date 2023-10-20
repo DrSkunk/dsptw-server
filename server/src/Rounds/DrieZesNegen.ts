@@ -10,11 +10,16 @@ export class DrieZesNegen extends Round {
   private currentPlayerId = 0;
 
   constructor(questions: EpisodeModel["drieZesNegen"]) {
+    const defaultQuestions = new Array(9).map((_, i) => ({
+      question: `Question ${i}`,
+      answer: `Answer ${i}`,
+    }));
+
     super();
     this.state = {
       roundName: RoundName.DrieZesNegen,
       currentQuestionIndex: -1,
-      questions,
+      questions: questions || defaultQuestions,
     };
   }
 

@@ -10,16 +10,19 @@
     {
       "path": "client"
     },
-
     {
       "path": "common"
+    },
+    {
+      "path": "templates"
     }
   ],
   "settings": {
     "files.exclude": {
       "server": true,
       "client": true,
-      "common": true
+      "common": true,
+      "templates": true
     }
   }
 }

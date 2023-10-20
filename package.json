@@ -13,7 +13,8 @@
   "workspaces": [
     "client",
     "server",
-    "common"
+    "common",
+    "templates"
   ],
   "devDependencies": {
     "husky": "^8.0.3"
